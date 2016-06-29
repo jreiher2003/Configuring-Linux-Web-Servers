@@ -5,7 +5,7 @@ It is always recommended to update and upgrade any linux box first and formost. 
 * `sudo apt-get update`  
 * `sudo apt-get upgrade`
 
-### Add users to server and remove root user
+### Add user to server and remove password-based logins
 Every linux os sys has the notion of a root user or a user named root.  We are going to add a user and give that user superuser privileges and remove the ability to login via a password.  This will increase security of our server.  
 * `sudo apt-get install finger`
 * `sudo adduser student`
@@ -31,4 +31,16 @@ Always private keys are stored locally and public keys are stored on remote serv
 6. login in to user account with key ` ssh student@ip-address -p 2222 -i ~/.ssh/your-key-name`  (ip address could also be localhost 127.0.0.1, port could be 2200)
 7. **Disable password logins** `sudo nano /etc/ssh/sshd_config`  *change PasswordAuthentication to* **no** 
 8. `sudo service ssh restart`
+
+
+### Configure firewall
+A server firewall is just an application that tells the server which ports to listen to on.  
+
+Protocol | Default Port
+http | 80
+https | 443
+ssh | 22
+ftp | 21
+pop3 | 110 
+smtp | 25 
 
