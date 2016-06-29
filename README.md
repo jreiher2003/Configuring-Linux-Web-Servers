@@ -29,6 +29,6 @@ Always private keys are stored locally and public keys are stored on remote serv
 4. copy **your-key-name.pub** and paste in .ssh/authorized_keys
 5. set file permissions `chmod 700 .ssh` and `chmod 644 .ssh/authorized_keys`
 6. login in to user account with key ` ssh student@ip-address -p 2222 -i ~/.ssh/your-key-name`  (ip address could also be localhost 127.0.0.1, port could be 2200)
-7. **Disable password logins** `sudo nano /etc/ssh/sshd_config`  *change PasswordAuthentication to **no***
+7. **Disable password logins** `sudo nano /etc/ssh/sshd_config`  *change PasswordAuthentication to **no** *
 8. `sudo service ssh restart`
 
