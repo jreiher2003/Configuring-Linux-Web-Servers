@@ -37,6 +37,7 @@ Always private keys are stored locally and public keys are stored on remote serv
 A server firewall is just an application that tells the server which ports to listen to on.  
 
 Protocol | Default Port
+--- | ---
 http | 80
 https | 443
 ssh | 22
