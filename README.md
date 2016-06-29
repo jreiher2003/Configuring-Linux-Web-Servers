@@ -83,23 +83,23 @@ To | Action | From
 
 
 ## A - Apache2 HTTP Server 
-[Here](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps) is some great docs using Flask
-1.  Install web server
-`sudo apt-get install apache2`
+[Here](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps) is some great docs using Flask  
 
-`sudo apt-get install libapache2-mod-wsgi python-dev`
+1.  Install web server  
 
-enable wsgi to serve app
+`sudo apt-get install apache2`  
+`sudo apt-get install libapache2-mod-wsgi python-dev`  
+enable wsgi to serve app  
+`sudo a2enmod wsgi`  
 
-`sudo a2enmod wsgi`
+2.  Create Flask App  
+-`cd /var/www`  
+-`sudo mkdir FlaskApp`  
+-`cd FlaskApp`  
+-sudo mkdir FlaskApp`  
+-`cd FlaskApp`  
+`sudo mkdir static templates `  
 
-2.  Create Flask App
--`cd /var/www`
--`sudo mkdir FlaskApp`
--`cd FlaskApp`
--sudo mkdir FlaskApp`
--`cd FlaskApp`
-`sudo mkdir static templates `
 
 ```
 |----FlaskApp
