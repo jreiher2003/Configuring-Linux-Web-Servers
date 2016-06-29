@@ -13,16 +13,13 @@ Every linux os sys has the notion of a root user or a user named root.  We are g
 #### Change sudo permissions to added user
 1. login as root
 2. `cd /etc/sudoers.d`
-3. copy file and rename it student
+3. copy file and rename it student `sudo cp /etc/sudoers.d/root /etc/sudoers.d/student`
+4. edit file `sudo nano /etc/sudoers.d/student` change root to student
 
-* `sudo cp /etc/sudoers.d/root /etc/sudoers.d/student`
-4. edit file
-* `sudo nano /etc/sudoers.d/student` change root to student
-
-### Generate key pairs
+#### Generate key pairs and disable password logins
 * install [ssh-keygen](http://stackoverflow.com/questions/11771378/ssh-keygen-is-not-recognized-as-an-internal-or-external-command).  
 Always private keys are stored locally and public keys are stored on remote server.
-* `ssh-keygen` (name-your-key) -locally
+`ssh-keygen` (name-your-key) locally
 1. login as user on remote server
 2. `mkdir .ssh`
 3. `touch .ssh/authorized_keys`
