@@ -1,7 +1,8 @@
-# Linux Server Configuration 
+# Linux Server Configuration LAPP Stack (Linux-Apache-Postgres-Python)
+## L - Linux
 
 ### Update and Upgrade linux os 
-It is always recommended to update and upgrade any linux box first and formost.  These two commands with get you there.
+It is always recommended to update and upgrade any linux box first and foremost.  These two commands with get you there.
 * `sudo apt-get update`  
 * `sudo apt-get upgrade`
 
@@ -79,6 +80,52 @@ To | Action | From
 22 (v6) | ALLOW | Anywhere
 2222/tcp (v6) | ALLOW | Anywhere
 80/tcp (v6) | ALLOW | Anywhere
+
+
+## A - Apache2 HTTP Server 
+[Here](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps) is some great docs using Flask
+1.  Install web server
+`sudo apt-get install apache2`
+
+`sudo apt-get install libapache2-mod-wsgi python-dev`
+
+enable wsgi to serve app
+
+`sudo a2enmod wsgi`
+
+2.  Create Flask App
+-`cd /var/www`
+-`sudo mkdir FlaskApp`
+-`cd FlaskApp`
+-sudo mkdir FlaskApp`
+-`cd FlaskApp`
+`sudo mkdir static templates `
+
+```
+|----FlaskApp
+|---------FlaskApp
+|--------------static
+|--------------templates
+```
+
+`sudo nano __init__.py`
+
+```python 
+from flask import Flask
+app = Flask(__name__)
+@app.route("/")
+def hello():
+    return "Hello, I love Digital Ocean!"
+if __name__ == "__main__":
+    app.run()
+```
+3. Install Flask  
+`sudo apt-get install python-pip`  
+`sudo pip install virtualenv`  
+`sudo virtualenv venv --always-copy` *if using vagrant*  
+`source venv/bin/activate`
+`pip install Flask`  
+`python __init__.py`  
 
 
 
