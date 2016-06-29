@@ -32,7 +32,8 @@ Always private keys are stored locally and public keys are stored on remote serv
 5. set file permissions `chmod 700 .ssh` and `chmod 644 .ssh/authorized_keys`
 6. login in to user account with key ` ssh student@ip-address -p 2222 -i ~/.ssh/your-key-name`  (ip address could also be localhost 127.0.0.1, port could be 2200)
 7. **Disable password logins** `sudo nano /etc/ssh/sshd_config`  *change PasswordAuthentication to* **no** 
-8. `sudo service ssh restart`
+8. *optional* while in the file change PermitRootLogin without-password to PermitRootLogin no to disallow root login.  
+9. `sudo service ssh restart`
 
 
 ### Configure firewall
@@ -80,7 +81,16 @@ To | Action | From
 80/tcp | ALLOW | Anywhere
 22 (v6) | ALLOW | Anywhere
 2222/tcp (v6) | ALLOW | Anywhere
-80/tcp (v6) | ALLOW | Anywhere
+80/tcp (v6) | ALLOW | Anywhere  
+
+#### Configure the local timezone to UTC
+`sudo dpkg-reconfigure tzdata` 
+ select none of the above. Then select UTC
+
+#### Install Git google this  
+`sudo apt-get install git`  
+`git config --global user.name "YOURNAME"`  
+`git config --global user.email "YOU@DOMAIN.com"`   
 
 
 ## A - Apache2 HTTP Server 
@@ -92,6 +102,8 @@ To | Action | From
 `sudo apt-get install libapache2-mod-wsgi python-dev`  
 enable wsgi to serve app  
 `sudo a2enmod wsgi`  
+disable default placeholder site  
+`sudo a2dissite 000-default`  
 
 ####  Create Flask App  
 -`cd /var/www`  
@@ -135,8 +147,8 @@ Newer versions of Ubuntu (13.10+) require a ".conf" extension for VirtualHost fi
 Add the following lines of code to the file to configure the virtual host. Be sure to change the ServerName to your domain or cloud server's IP address:  
 ```
 <VirtualHost *:80>
-        ServerName mywebsite.com
-        ServerAdmin admin@mywebsite.com
+        ServerName 52.34.51.82
+        ServerAdmin admin@52.34.51.82
         WSGIScriptAlias / /var/www/FlaskApp/flaskapp.wsgi
         <Directory /var/www/FlaskApp/FlaskApp/>
             Order allow,deny
@@ -182,6 +194,18 @@ Now your directory structure should look like this:
 ```  
 #### Restart Apache  
 `sudo service apache2 restart`  
+
+#### Clone Github Repo  
+`sudo git clone https://github.com/jreiher2003/menu.git`  
+make sure to get hidden files in move `shopt -s dotglob`  
+Move files from clone dir to FlaskApp  
+`mv /var/www/FlaskApp/menu/* /var/www/FlaskApp/FlaskApp/  
+remove clone dir `sudo rm -r menu`  
+#### Make .git inaccessible  
+`cd /var/www/FlaskApp/` create .htaccess file  `sudo nano .htaccess`  
+paste in `RedirectMatch 404/\.git`  
+
+## P - PostgresSQL  
 
 
 
