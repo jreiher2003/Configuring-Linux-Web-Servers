@@ -85,14 +85,14 @@ To | Action | From
 ## A - Apache2 HTTP Server 
 [Here](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps) is some great docs using Flask  
 
-1.  Install web server  
+####  Install web server  
 
 `sudo apt-get install apache2`  
 `sudo apt-get install libapache2-mod-wsgi python-dev`  
 enable wsgi to serve app  
 `sudo a2enmod wsgi`  
 
-2.  Create Flask App  
+####  Create Flask App  
 -`cd /var/www`  
 -`sudo mkdir FlaskApp`  
 -`cd FlaskApp`  
@@ -119,13 +119,73 @@ def hello():
 if __name__ == "__main__":
     app.run()
 ```
-3. Install Flask  
+#### Install Flask  
 `sudo apt-get install python-pip`  
 `sudo pip install virtualenv`  
 `sudo virtualenv venv --always-copy` *if using vagrant*  
 `source venv/bin/activate`
 `pip install Flask`  
 `python __init__.py`  
+
+#### Configure and Enable a New Virtual Host 
+Newer versions of Ubuntu (13.10+) require a ".conf" extension for VirtualHost files -- run the following command 
+`sudo nano /etc/apache2/sites-available/FlaskApp.conf`  
+
+Add the following lines of code to the file to configure the virtual host. Be sure to change the ServerName to your domain or cloud server's IP address:  
+```
+<VirtualHost *:80>
+        ServerName mywebsite.com
+        ServerAdmin admin@mywebsite.com
+        WSGIScriptAlias / /var/www/FlaskApp/flaskapp.wsgi
+        <Directory /var/www/FlaskApp/FlaskApp/>
+            Order allow,deny
+            Allow from all
+        </Directory>
+        Alias /static /var/www/FlaskApp/FlaskApp/static
+        <Directory /var/www/FlaskApp/FlaskApp/static/>
+            Order allow,deny
+            Allow from all
+        </Directory>
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        LogLevel warn
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```  
+Enable the virtual host with the following command:  
+`sudo a2ensite FlaskApp`  
+
+#### Create the .wsgi File
+Apache uses the .wsgi file to serve the Flask app. Move to the /var/www/FlaskApp directory and create a file named flaskapp.wsgi with following commands:  
+`cd /var/www/FlaskApp`  
+`sudo nano flaskapp.wsgi`  
+
+```python
+#!/usr/bin/python
+import sys
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0,"/var/www/FlaskApp/")
+
+from FlaskApp import app as application
+application.secret_key = 'Add your secret key'
+```  
+Now your directory structure should look like this:  
+```
+|----FlaskApp
+|---------FlaskApp
+|--------------static/
+|--------------templates/
+|--------------venv/
+|--------------__init__.py
+|---------flaskapp.wsgi
+```  
+#### Restart Apache  
+`sudo service apache2 restart`  
+
+
+
+
+
 
 
 
