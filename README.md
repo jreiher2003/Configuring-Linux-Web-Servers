@@ -34,7 +34,7 @@ Always private keys are stored locally and public keys are stored on remote serv
 
 
 ### Configure firewall
-A server firewall is just an application that tells the server which ports to listen to on.  
+A server firewall is just an application that tells the server which ports to listen to on.  ubuntu pre-installed firewall is `ufw`
 
 Protocol | Default Port
 --- | ---
@@ -44,4 +44,43 @@ ssh | 22
 ftp | 21
 pop3 | 110 
 smtp | 25 
+
+`sudo ufw status`
+
+#### incoming
+we want to block all incoming traffic by default *The rule of least privilege*
+
+`sudo ufw default deny incoming`
+
+`sudo ufw allow ssh`
+
+`sudo ufw allow 2222/tcp`
+
+`sudo ufw allow www`
+
+
+#### outgoing
+traffic going from our server is not a big security risk.
+
+`sudo ufw default allow outgoing`
+
+#### enable firewall
+*Never enable firewall unless you are sure your server is configured properly*
+
+`sudo ufw enable`
+
+`sudo ufw status` 
+
+To | Action | From
+--- | --- | ---
+22 | ALLOW | Anywhere
+2222/tcp | ALLOW | Anywhere
+80/tcp | ALLOW | Anywhere
+22 (v6) | ALLOW | Anywhere
+2222/tcp (v6) | ALLOW | Anywhere
+80/tcp (v6) | ALLOW | Anywhere
+
+
+
+
 
