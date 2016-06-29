@@ -19,7 +19,10 @@ Every linux os sys has the notion of a root user or a user named root.  We are g
 #### Generate key pairs and disable password logins
 * install [ssh-keygen](http://stackoverflow.com/questions/11771378/ssh-keygen-is-not-recognized-as-an-internal-or-external-command).  
 Always private keys are stored locally and public keys are stored on remote server.
+
 `ssh-keygen` (name-your-key) locally
+
+
 1. login as user on remote server
 2. `mkdir .ssh`
 3. `touch .ssh/authorized_keys`
