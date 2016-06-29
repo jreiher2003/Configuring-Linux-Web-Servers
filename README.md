@@ -1,4 +1,5 @@
-# Linux Server Configuration LAPP Stack (Linux-Apache-Postgres-Python)
+# Linux Server Configuration  
+# LAPP Stack (Linux-Apache-Postgres-Python)
 ## L - Linux
 
 ### Update and Upgrade linux os 
