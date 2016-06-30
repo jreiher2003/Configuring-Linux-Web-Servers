@@ -91,13 +91,17 @@ To | Action | From
 
 ## A - Apache2 HTTP Server 
 [Here](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps) is some great docs using Flask  
-
+[Here](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-14-04)
 ####  Install web server  
 
 `sudo apt-get install apache2`  
 `sudo apt-get install libapache2-mod-wsgi python-dev`  
 enable wsgi to serve app  
 `sudo a2enmod wsgi`  
+
+check that its working:  
+http://your_server_IP_address
+
 see error logs  
 `sudo cat /var/log/apache2/error.log`  
   disable default placeholder site  
@@ -215,6 +219,36 @@ remove clone dir `sudo rm -rf menu`
 paste in `RedirectMatch 404/\.git`  
 
 ## P - PostgresSQL  
+installing [PostgresSQL](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04)  
+`sudo apt-get install postgresql postgresql-contrib`  
+
+login as default user  
+`sudo -i u postgres`  
+
+shell prompt  
+`psql`  
+
+quit  
+`\q`  
+
+#### create new role  
+`createuser --interactive`  
+>> name user (same as linux user) superuser yes  
+
+#### login as postgres user  
+`sudo -i -u <user>`  
+
+#### create db
+`createdb test1`  
+
+#### connect to db  
+`psql -d test1`  
+`\conninfo`  
+
+
+
+
+
 
 
 
