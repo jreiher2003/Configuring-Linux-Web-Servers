@@ -1,6 +1,6 @@
 # LAPP Stack (Linux-Apache-Postgres-Python)
 # Linux Server Configuration  
-## L - Linux
+## L - Linux Ubuntu trusty/64
 
 ### Update and Upgrade linux os 
 It is always recommended to update and upgrade any linux box first and foremost.  These two commands with get you there.
@@ -86,12 +86,6 @@ To | Action | From
 #### Configure the local timezone to UTC
 `sudo dpkg-reconfigure tzdata` 
  select none of the above. Then select UTC
-
-#### Install Git google this  
-`sudo apt-get install git`  
-`git config --global user.name "YOURNAME"`  
-`git config --global user.email "YOU@DOMAIN.com"`   
-
 
 ## A - Apache2 HTTP Server 
 [Here](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps) is some great docs using Flask  
@@ -193,14 +187,21 @@ Now your directory structure should look like this:
 |---------flaskapp.wsgi
 ```  
 #### Restart Apache  
-`sudo service apache2 restart`  
+`sudo service apache2 restart` 
+
+#### Install Git   
+`sudo apt-get install git`  
+`git config --global user.name "YOURNAME"`  
+`git config --global user.email "YOU@DOMAIN.com"`
+**configure git awesomely!**
+https://www.udacity.com/course/viewer#!/c-ud775/l-2980038599/m-3333158951 
 
 #### Clone Github Repo  
 `sudo git clone https://github.com/jreiher2003/menu.git`  
 make sure to get hidden files in move `shopt -s dotglob`  
 Move files from clone dir to FlaskApp  
-`mv /var/www/FlaskApp/menu/* /var/www/FlaskApp/FlaskApp/  
-remove clone dir `sudo rm -r menu`  
+`mv /var/www/FlaskApp/menu/* /var/www/FlaskApp/FlaskApp/`  
+remove clone dir `sudo rm -rf menu`  
 #### Make .git inaccessible  
 `cd /var/www/FlaskApp/` create .htaccess file  `sudo nano .htaccess`  
 paste in `RedirectMatch 404/\.git`  
