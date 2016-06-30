@@ -13,12 +13,12 @@ Every linux os sys has the notion of a root user or a user named root.  We are g
 * `sudo adduser student`
 
 #### Change sudo permissions to added user
-`sudo cat /etc/sudoers`  # read sudoers file  
-`sudo ls /etc/sudoers.d`  # lst sudoer users  
-1. login as root
-2. `cd /etc/sudoers.d`
-3. copy file and rename it student `sudo cp /etc/sudoers.d/root /etc/sudoers.d/student`
-4. edit file `sudo nano /etc/sudoers.d/student` change root to student
+`sudo cat /etc/sudoers`  *read sudoers file*    
+`sudo ls /etc/sudoers.d`  *lst sudoer users*    
+1. login as root  
+2. copy file and rename it student `sudo cp /etc/sudoers.d/root /etc/sudoers.d/student`  *could be called vagrant*  
+3. edit file `sudo nano /etc/sudoers.d/student` change root to student  
+
 
 #### Generate key pairs and disable password logins
 * install [ssh-keygen](http://stackoverflow.com/questions/11771378/ssh-keygen-is-not-recognized-as-an-internal-or-external-command).  
