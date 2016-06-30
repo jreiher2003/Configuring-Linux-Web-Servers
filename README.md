@@ -13,6 +13,8 @@ Every linux os sys has the notion of a root user or a user named root.  We are g
 * `sudo adduser student`
 
 #### Change sudo permissions to added user
+`sudo cat /etc/sudoers`  # read sudoers file  
+`sudo ls /etc/sudoers.d`  # lst sudoer users  
 1. login as root
 2. `cd /etc/sudoers.d`
 3. copy file and rename it student `sudo cp /etc/sudoers.d/root /etc/sudoers.d/student`
