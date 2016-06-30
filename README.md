@@ -98,7 +98,9 @@ To | Action | From
 `sudo apt-get install libapache2-mod-wsgi python-dev`  
 enable wsgi to serve app  
 `sudo a2enmod wsgi`  
-disable default placeholder site  
+see error logs  
+`sudo cat /var/log/apache2/error.log`  
+  disable default placeholder site  
 `sudo a2dissite 000-default`  
 
 ####  Create Flask App  
@@ -195,8 +197,12 @@ Now your directory structure should look like this:
 `sudo apt-get install git`  
 `git config --global user.name "YOURNAME"`  
 `git config --global user.email "YOU@DOMAIN.com"`
-**configure git awesomely!**
-https://www.udacity.com/course/viewer#!/c-ud775/l-2980038599/m-3333158951 
+git config --global push.default upstream
+git config --global merge.conflictstyle diff3  
+git config --global credential.helper 'cache --timeout=10000'  
+
+**configure git awesomely!**[here](https://www.udacity.com/course/viewer#!/c-ud775/l-2980038599/m-3333158951)
+
 
 #### Clone Github Repo  
 `sudo git clone https://github.com/jreiher2003/menu.git`  
