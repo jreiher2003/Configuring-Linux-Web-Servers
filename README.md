@@ -200,10 +200,10 @@ Now your directory structure should look like this:
 #### Install Git   
 `sudo apt-get install git`  
 `git config --global user.name "YOURNAME"`  
-`git config --global user.email "YOU@DOMAIN.com"`
-git config --global push.default upstream
-git config --global merge.conflictstyle diff3  
-git config --global credential.helper 'cache --timeout=10000'  
+`git config --global user.email "YOU@DOMAIN.com"`  
+`git config --global push.default upstream`  
+`git config --global merge.conflictstyle diff3`  
+`git config --global credential.helper 'cache --timeout=10000'`  
 
 **configure git awesomely!**[here](https://www.udacity.com/course/viewer#!/c-ud775/l-2980038599/m-3333158951)
 
