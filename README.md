@@ -13,12 +13,18 @@ Every linux os sys has the notion of a root user or a user named root.  We are g
 * `sudo adduser student`
 
 #### Change sudo permissions to added user
+*update*  if your getting an error **unable to resolve host**  do two things  
+1. read hostname file `cat /etc/hostname`  copy that in mycase it was ip-10-20-20-7
+2. `sudo nano /etc/hosts/` >>> paste in top of file >> `127.0.0.1 localhost localhost.localdomain ip-10-20-20-7`
 `sudo cat /etc/sudoers`  *read sudoers file*    
 `sudo ls /etc/sudoers.d`  *lst sudoer users*    
-1. login as root  
+1. login as root   
 2. copy file and rename it student `sudo cp /etc/sudoers.d/root /etc/sudoers.d/student`  *could be called vagrant*  
 3. edit file `sudo nano /etc/sudoers.d/student` change root to student  
-
+4. On a production server you may only need to create user file as `sudo nano /etc/sudoers.d/<user>`  
+5. Add #``` User privilege specification
+        <user>    ALL=(ALL:ALL) NOPASSWD: ALL```   
+6. check sudo access on new user  `whoami`  >>> root >> `su <user>` >> `whoami` >> <user>
 
 #### Generate key pairs and disable password logins
 * install [ssh-keygen](http://stackoverflow.com/questions/11771378/ssh-keygen-is-not-recognized-as-an-internal-or-external-command).  
@@ -34,7 +40,7 @@ Always private keys are stored locally and public keys are stored on remote serv
 5. set file permissions `chmod 700 .ssh` and `chmod 644 .ssh/authorized_keys`
 6. login in to user account with key ` ssh student@ip-address -p 2222 -i ~/.ssh/your-key-name`  (ip address could also be localhost 127.0.0.1, port could be 2200)
 7. **Disable password logins** `sudo nano /etc/ssh/sshd_config`  *change PasswordAuthentication to* **no** 
-8. *optional* while in the file change PermitRootLogin without-password to PermitRootLogin no to disallow root login.  
+8. *optional* while in the file change PermitRootLogin without-password to **PermitRootLogin no** to disallow root login.  
 9. `sudo service ssh restart`
 
 
@@ -111,9 +117,9 @@ see error logs
 -`cd /var/www`  
 -`sudo mkdir FlaskApp`  
 -`cd FlaskApp`  
--sudo mkdir FlaskApp`  
+-`sudo mkdir FlaskApp`  
 -`cd FlaskApp`  
-`sudo mkdir static templates `  
+`sudo mkdir static templates`  
 
 
 ```
@@ -138,9 +144,12 @@ if __name__ == "__main__":
 `sudo apt-get install python-pip`  
 `sudo pip install virtualenv`  
 `sudo virtualenv venv --always-copy` *if using vagrant*  
+`sudo chown -R jeff:jeff venv/`  change file permissions to venv to not have to install globally  
 `source venv/bin/activate`
 `pip install Flask`  
 `python __init__.py`  
+
+>> *Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)*
 
 #### Configure and Enable a New Virtual Host 
 Newer versions of Ubuntu (13.10+) require a ".conf" extension for VirtualHost files -- run the following command 
@@ -178,6 +187,8 @@ Apache uses the .wsgi file to serve the Flask app. Move to the /var/www/FlaskApp
 #!/usr/bin/python
 import sys
 import logging
+activate_this = '/var/www/FlaskApp/FlaskApp/venv/bin/activate_this.py'
+execfile(activate_this, dict(__file__=activate_this))
 logging.basicConfig(stream=sys.stderr)
 sys.path.insert(0,"/var/www/FlaskApp/")
 
@@ -223,7 +234,7 @@ installing [PostgresSQL](https://www.digitalocean.com/community/tutorials/how-to
 `sudo apt-get install postgresql postgresql-contrib`  
 
 login as default user  
-`sudo -i u postgres`  
+`sudo -i -u postgres`  
 
 shell prompt  
 `psql`  
@@ -233,7 +244,9 @@ quit
 
 #### create new role  
 `createuser --interactive`  
->> name user (same as linux user) superuser yes  
+>> name user (same as linux user) superuser yes 
+
+`exit`   
 
 #### login as postgres user  
 `sudo -i -u <user>`  
@@ -244,6 +257,9 @@ quit
 #### connect to db  
 `psql -d test1`  
 `\conninfo`  
+
+You are connected to database "test1" as user "jeff" via socket in "/var/run/postgresql" at port "5432".
+
 
 
 
