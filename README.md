@@ -214,7 +214,7 @@ Now your directory structure should look like this:
 `git config --global user.email "jreiher2003@yahoo.com"`  
 `git config --global push.default upstream`  
 `git config --global merge.conflictstyle diff3`  
-`git config --global credential.helper 'cache --timeout=10000'` 
+`git config --global credential.helper 'cache --timeout=10000'`   
 `wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash`  
 `wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh`  
 `wget https://www.udacity.com/api/nodes/3333158951/supplemental_media/bash-profile-course/download`  
