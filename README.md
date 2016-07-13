@@ -44,24 +44,35 @@ Always private keys are stored locally and public keys are stored on remote serv
 9. `sudo service ssh restart`  
 
 ### File Permissions  
-```ls -al
+```
+ls -al
 - = file
-d = directory ```  
+d = directory 
+```  
 
-```-rw-r--r-- 1 user user date .bashrc
+```
+-rw-r--r-- 1 user user date .bashrc
 owner  group   everyone  owner  group
-rw-    r--     r--       finn   finn```  
+rw-    r--     r--       finn   finn
+```    
 
-```octal permissions read write execute 0 if none
-r = 4  w = 2  x = 1```
-```user/group/everyone
+```
+octal permissions read write execute 0 if none
+r = 4  w = 2  x = 1
+```  
+
+```
+user/group/everyone
 .bashrc octal form
-644```
-```chmod >> change mode 
+644
+```  
+```
+chmod >> change mode 
 chown >> change owner
 chgrp >> change group
 
-ex. >> sudo chown <user-to-change-to> <file>```
+ex. >> sudo chown <user-to-change-to> <file>
+```
 
 
 
