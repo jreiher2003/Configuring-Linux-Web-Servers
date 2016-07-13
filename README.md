@@ -4,7 +4,8 @@
 
 ### Update and Upgrade linux os 
 It is always recommended to update and upgrade any linux box first and foremost.  These two commands with get you there.
-* `sudo apt-get update`  
+* `sudo apt-get update` 
+* `sudo apt-get autoremove`   
 * `sudo apt-get upgrade`
 
 ### Add user to server and remove password-based logins
@@ -53,7 +54,7 @@ d = directory
 ```
 -rw-r--r-- 1 user user date .bashrc
 owner  group   everyone  owner  group
-rw-    r--     r--       finn   finn
+rw-    r--     r--       user   user
 ```    
 
 ```
