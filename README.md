@@ -41,7 +41,28 @@ Always private keys are stored locally and public keys are stored on remote serv
 6. login in to user account with key ` ssh student@ip-address -p 2222 -i ~/.ssh/your-key-name`  (ip address could also be localhost 127.0.0.1, port could be 2200)
 7. **Disable password logins** `sudo nano /etc/ssh/sshd_config`  *change PasswordAuthentication to* **no** 
 8. *optional* while in the file change PermitRootLogin without-password to **PermitRootLogin no** to disallow root login.  
-9. `sudo service ssh restart`
+9. `sudo service ssh restart`  
+
+### File Permissions  
+```ls -al
+- = file
+d = directory ```  
+
+```-rw-r--r-- 1 user user date .bashrc
+owner  group   everyone  owner  group
+rw-    r--     r--       finn   finn```  
+
+```octal permissions read write execute 0 if none
+r = 4  w = 2  x = 1```
+```user/group/everyone
+.bashrc octal form
+644```
+```chmod >> change mode 
+chown >> change owner
+chgrp >> change group
+
+ex. >> sudo chown <user-to-change-to> <file>```
+
 
 
 ### Configure firewall
@@ -111,7 +132,8 @@ http://your_server_IP_address
 see error logs  
 `sudo cat /var/log/apache2/error.log`  
   disable default placeholder site  
-`sudo a2dissite 000-default`  
+`sudo a2dissite 000-default` 
+`sudo a2ensite 000-default`   
 
 ####  Create Flask App  
 -`cd /var/www`  
