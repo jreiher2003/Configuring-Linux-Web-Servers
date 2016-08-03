@@ -37,7 +37,10 @@
 
 ### set proxychains.conf
 `nano /etc/proxychains.conf`   
-change strict to dynamic_chain 
+change *strict* to *dynamic_chain* 
+add this to bottom to config socks5 also  
+`socks5 127.0.0.1 9050`  
+
 
 ### check tor if running 
 `service tor status `  
@@ -49,3 +52,8 @@ change strict to dynamic_chain
 
 ###route all traffic through the proxychains tor
 `proxychains nmap ip port <args>`  
+
+#### set open dns server
+`nano /etc/dhcp/dhclient.conf`  
+use opendns.com  
+`service network-manager restart`  
