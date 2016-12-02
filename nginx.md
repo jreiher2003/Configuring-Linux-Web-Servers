@@ -1,4 +1,4 @@
-# Gninx server set up (work in progress)
+# Nginx server set up (work in progress)
 
 ### Add a new User 
 ```adduser youruser sudo```  
@@ -41,7 +41,7 @@ server {
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
 
-}
+}cd
 ```
 ### Restart nginx 
 ``` sudo /etc/init.d/nginx restart```  
