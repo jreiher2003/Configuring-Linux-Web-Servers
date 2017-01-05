@@ -1,0 +1,1 @@
+echo -n "UDACITY / HTTP/1.1\r\nHost:netcat.127.0.0.1.xip.io\r\n\r\nX-Udacity-Exercise-Header:jeffiscool\r\n\r\ndate: Wed,11, Jan 1995 23:00:00 GMT"\r\n\r\n | nc netcat.127.0.0.1.xip.io 8080

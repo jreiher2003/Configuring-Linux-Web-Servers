@@ -5,9 +5,9 @@
 2. own domain name
 3. set up mx records and a records to pointer to ip with regester  
 4. local dns bind configure mx records a pointers text spf configure to secure mail server
-5. emailsecuritygrader.com | mxtoolbox.com
+5. emailsecuritygrader.com | mxtoolbox.com  
 `hostname -f`  
-`sudo nano /etc/hosts` 
+`sudo nano /etc/hosts`   
 ```
 127.0.0.1 localhost
 127.0.0.1 mail.mydomain.com mail 
@@ -94,7 +94,7 @@ smtp_tls_note_starttls_offer = yes
 smtpd_tls_loglevel = 4
 smtpd_tls_received_header = yes
 smtpd_helo_required = yes
-smtpd_helo_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_$ 
+smtpd_helo_restrictions = permit_mynetworks, permit_sasl_authenticated, reject_non_fqdn_hostname, reject_invalid_hostname
 ```
 #### Next Generate certificates for tls
 ```
@@ -239,4 +239,132 @@ mailman   unix  -       n       n       -       -       pipe
   ${nexthop} ${user}
 ```
 
+### Dovecot common configs
+`sudo apt-get install dovecot-common -y`  
+```
+Create self signed cert? <Yes>   
+Host name: mail.mydomain.com
+_____
+sudo nano /etc/dovecot/conf.d/10-master.conf
 
+service auth {
+  # auth_socket_path points to this userdb socket by default. It's typically
+  # used by dovecot-lda, doveadm, possibly imap process, etc. Users that have
+  # full permissions to this socket are able to get a list of all usernames and
+  # get the results of everyone's userdb lookups.
+  #
+  # The default 0666 mode allows anyone to connect to the socket, but the
+  # userdb lookups will succeed only if the userdb returns an "uid" field that
+  # matches the caller process's UID. Also if caller's uid or gid matches the
+  # socket's uid or gid the lookup succeeds. Anything else causes a failure.
+  #
+  # To give the caller full permissions to lookup all users, set the mode to
+  # something else than 0666 and Dovecot lets the kernel enforce the
+  # permissions (e.g. 0777 allows everyone full permissions).
+  unix_listener auth-userdb {
+    #mode = 0666
+    #user =
+    #group =
+  }
+
+  # Postfix smtp-auth
+    unix_listener /var/spool/postfix/private/auth {
+    mode = 0660
+    user = postfix
+    group = postfix
+  }
+
+  # Auth process is run as this user.
+  #user = $default_internal_user
+}
+
+```
+```
+sudo nano /etc/dovecot/conf.d/10-auth.conf
+
+##
+## Authentication processes
+##
+auth_mechanisms = plain login
+
+```  
+`sudo service postfix restart`  
+-->* Stopping Postfix Mail Transport Agent postfix                         
+-->* Starting Postfix Mail Transport Agent postfix 
+`sudo serivce dovecot restart`  
+-->dovecot stop/waiting
+-->dovecot start/running, process 3530
+
+### Testing  
+```
+telnet mail.mydomain.com smtp
+
+Trying 127.0.0.1...
+Connected to mail.asciichan-tripplannr.com.
+Escape character is '^]'.
+
+ehlo mail.asciichan-tripplannr.com
+250-mail.asciichan-tripplannr.com
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-AUTH PLAIN LOGIN
+250-AUTH=PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+```
+--> quit  
+``` 
+telnet mail.asciichan-tripplannr.com 587
+-->ehlo mail.asciichan-tripplannr.com
+250-mail.asciichan-tripplannr.com
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+``` 
+### Dovecot main 
+`sudo apt-get install dovecot-imapd dovecot-pop3d -y`  
+#### Configure Mailbox dovecot  
+```
+sudo nano /etc/dovecot/conf.d/10-mail.conf
+
+##
+## Mailbox locations and namespaces
+##
+
+mail_location = maildir:~/Maildir
+```  
+POP3  
+
+sudo nano /etc/dovecot/conf.d/20-pop3.conf
+
+pop3_uidl_format = %08Xu%08Xv  
+
+```
+```
+SSL configure  
+sudo nano /etc/dovecot/conf.d/10-ssl.conf  
+ssl = yes
+```  
+`sudo service dovecot restart`  
+
+### Test pop3 imap access for receiving mail  
+```
+telnet mail.mydomain.com 110 or 995 993 143
+Trying 127.0.0.1...
+Connected to mail.asciichan-tripplannr.com.
+Escape character is '^]'.
++OK Dovecot (Ubuntu) ready.
+```
+#### check what server ports are open
+`netstat -nl4`  
+### check mail log
+`sudo nano /var/log/mail.log`  
